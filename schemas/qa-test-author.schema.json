@@ -1,0 +1,30 @@
+{
+  "title": "qa-test-author output",
+  "type": "object",
+  "required": ["filesChanged", "selfCheck"],
+  "additionalProperties": false,
+  "properties": {
+    "filesChanged": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["file", "action"], "additionalProperties": false,
+        "properties": { "file": { "type": "string", "minLength": 1 }, "action": { "enum": ["update", "add"] } }
+      }
+    },
+    "selfCheck": {
+      "type": "object", "required": ["command", "exitCode", "passed", "failed"],
+      "properties": {
+        "command": { "type": "string" }, "exitCode": { "type": "integer" },
+        "passed": { "type": "integer", "minimum": 0 }, "failed": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "repair": {
+      "type": "object", "required": ["failedAssumption", "requirementRef", "whyStillTests"],
+      "properties": {
+        "failedAssumption": { "type": "string", "minLength": 1 },
+        "requirementRef": { "type": "string", "minLength": 1 },
+        "whyStillTests": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

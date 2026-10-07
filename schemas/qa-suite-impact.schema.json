@@ -1,0 +1,64 @@
+{
+  "title": "qa-suite-impact output: which QA tests to update, add or delete",
+  "type": "object",
+  "required": ["acCoverage", "changeSet", "impactedExisting"],
+  "additionalProperties": false,
+  "properties": {
+    "acCoverage": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["acId", "disposition"], "additionalProperties": false,
+        "properties": {
+          "acId": { "type": "string", "pattern": "^AC\\d+$" },
+          "disposition": { "enum": ["existing", "update", "new", "manual"] },
+          "ref": { "type": "string" },
+          "why": { "type": "string" }
+        }
+      }
+    },
+    "changeSet": {
+      "type": "object", "required": ["update", "add", "delete"], "additionalProperties": false,
+      "properties": {
+        "update": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["file", "test", "acId", "why", "intendedChange"], "additionalProperties": false,
+            "properties": {
+              "file": { "type": "string", "minLength": 1 }, "test": { "type": "string" },
+              "acId": { "type": "string" }, "why": { "type": "string", "minLength": 1 },
+              "intendedChange": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "add": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["file", "kind", "acId", "scenarios"], "additionalProperties": false,
+            "properties": {
+              "file": { "type": "string", "minLength": 1 }, "kind": { "enum": ["ui", "api"] },
+              "acId": { "type": "string" },
+              "scenarios": {
+                "type": "array", "minItems": 1,
+                "items": {
+                  "type": "object", "required": ["title", "steps", "expected"],
+                  "properties": { "title": { "type": "string" }, "steps": { "type": "array", "items": { "type": "string" } }, "expected": { "type": "string" } }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["file", "why", "evidence"], "additionalProperties": false,
+            "properties": {
+              "file": { "type": "string", "minLength": 1 }, "acId": { "type": "string" },
+              "why": { "type": "string", "minLength": 1 }, "evidence": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "impactedExisting": { "type": "array", "items": { "type": "string" } }
+  }
+}

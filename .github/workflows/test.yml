@@ -1,0 +1,27 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    # The plugin runs on Windows (Git Bash paths, drive letters), so the tests do too.
+    runs-on: windows-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        # 22 is the floor in package.json "engines"; keep the two in sync.
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: git config --global user.email "ci@example.com"
+      - run: git config --global user.name "CI"
+      - run: npm test

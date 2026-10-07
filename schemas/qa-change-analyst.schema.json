@@ -1,0 +1,43 @@
+{
+  "title": "qa-change-analyst output: what the code change does that no test covers",
+  "type": "object",
+  "required": ["changedBehaviours", "additionalScenarios", "regressionRisks", "riskLevel", "touchesCriticalArea", "criticalPaths"],
+  "additionalProperties": false,
+  "properties": {
+    "changedBehaviours": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["file", "behaviour"],
+        "properties": { "file": { "type": "string" }, "symbol": { "type": "string" }, "behaviour": { "type": "string" }, "coveredBy": { "type": ["string", "null"] } }
+      }
+    },
+    "additionalScenarios": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["kind", "file", "title", "steps", "expected", "codeRef"], "additionalProperties": false,
+        "properties": {
+          "kind": { "enum": ["ui", "api"] }, "file": { "type": "string", "minLength": 1 }, "title": { "type": "string" },
+          "steps": { "type": "array", "items": { "type": "string" } }, "expected": { "type": "string" },
+          "codeRef": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "regressionRisks": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["area", "suggestedSuites"],
+        "properties": { "area": { "type": "string" }, "why": { "type": "string" }, "suggestedSuites": { "type": "array", "items": { "type": "string" } } }
+      }
+    },
+    "riskLevel": { "enum": ["low", "medium", "high", "critical"] },
+    "touchesCriticalArea": { "type": "boolean" },
+    "criticalPaths": { "type": "array", "items": { "type": "string" } },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["file", "note"], "additionalProperties": false,
+        "properties": { "file": { "type": "string", "minLength": 1 }, "line": { "type": "integer" }, "note": { "type": "string", "minLength": 1 } }
+      }
+    }
+  }
+}

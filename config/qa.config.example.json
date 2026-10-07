@@ -1,0 +1,22 @@
+{
+  "jira": {
+    "projectKey": "<Jira project key, e.g. ABC>",
+    "cloudId": "<from getAccessibleAtlassianResources>",
+    "statuses": {
+      "ready": "<status of a ticket waiting for QA, e.g. Ready for QA>",
+      "inQa": "<status while QA works on it, e.g. In QA>",
+      "review": "<status when QA is done and a person decides, e.g. QA Review>"
+    },
+    "allowedTransitionIds": ["<id of the transition into the inQa status>", "<id of the transition into the review status>"]
+  },
+  "git": { "integrationBranch": "<branch dev work is merged to before QA, e.g. stage>" },
+  "stack": {
+    "composeFile": "<Docker Compose file of the QA stack, e.g. docker-compose.qa.yml>",
+    "project": "<Compose project name for the QA stack, e.g. myapp-qa>"
+  },
+  "qa": {
+    "testDir": "<Playwright test folder, e.g. e2e>",
+    "playwrightConfig": "<Playwright config file, e.g. e2e/playwright.config.ts>",
+    "baseUrl": "<app URL in the QA stack, e.g. http://localhost:3000>"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "jira": {
+    "projectKey": "PROJ",
+    "cloudId": "00000000-0000-4000-8000-000000000000",
+    "statuses": { "ready": "Ready For QA", "inQa": "In QA", "review": "QA Review" },
+    "allowedTransitionIds": ["31", "41"]
+  },
+  "git": {
+    "integrationBranch": "develop",
+    "protectedBranches": ["main", "develop"]
+  },
+  "stack": {
+    "composeFile": "docker-compose.qa.yml",
+    "project": "myapp-qa",
+    "health": ["http://localhost:18080/health", "http://localhost:13000/"],
+    "shaCheck": { "api": "http://localhost:18080/health#sha", "web": "http://localhost:13000/#meta:app-sha" }
+  },
+  "qa": {
+    "testDir": "web/e2e",
+    "apiTestDir": "web/e2e/api",
+    "playwrightConfig": "web/e2e/playwright.config.ts",
+    "baseUrl": "http://localhost:13000",
+    "apiUrl": "http://localhost:18080",
+    "env": { "VITE_API_URL": "http://localhost:18080" },
+    "conventionsDocs": ["docs/testing/e2e-conventions.md"],
+    "capabilities": ["ui", "api"],
+    "knownDrift": [
+      { "file": "web/e2e/checkout-layout.spec.ts", "reason": "PROJ-7: the Pay button's aria-label now overrides its visible text, so the name locator times out", "since": "1a2b3c4" },
+      { "file": "web/e2e/a11y.spec.ts", "reason": "PROJ-7: axe color-contrast on the onboarding tooltip's \"Got it\" button", "since": "5d6e7f8",
+        "tests": ["dashboard has no serious/critical a11y violations"] }
+    ],
+    "driftProbeEvery": 5
+  },
+  "suites": {
+    "smoke": ["web/e2e/home.spec.ts", "web/e2e/login.spec.ts"],
+    "ui": ["web/e2e/home.spec.ts", "web/e2e/checkout-layout.spec.ts"],
+    "a11y": ["web/e2e/a11y.spec.ts"],
+    "checkout": ["web/e2e/checkout.spec.ts", "web/e2e/cart.spec.ts"],
+    "api": ["web/e2e/api/"]
+  },
+  "routes": {
+    "ui": ["smoke", "ui", "a11y"],
+    "api": ["smoke", "api"],
+    "auth": ["smoke", "ui", "a11y", "checkout", "api"],
+    "unknown": ["smoke"]
+  },
+  "criticalAreas": {
+    "auth": ["server/src/auth/"],
+    "payments": ["server/src/payments/"]
+  }
+}

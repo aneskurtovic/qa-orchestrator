@@ -1,0 +1,25 @@
+{
+  "title": "qa-triage output",
+  "type": "object",
+  "required": ["failures"],
+  "additionalProperties": false,
+  "properties": {
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["spec", "test", "classification", "evidence", "confidence", "recommendedAction"],
+        "additionalProperties": false,
+        "properties": {
+          "spec": { "type": "string" }, "test": { "type": "string" },
+          "classification": { "enum": ["defect", "flaky-suspected", "env", "test-bug", "test-outdated", "pre-existing", "unknown"] },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "recommendedAction": { "enum": ["rerun", "repair-test", "ask-human", "report", "escalate"] },
+          "acId": { "type": "string" },
+          "proposedTestChange": { "type": "string" },
+          "causeCommit": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "qa-orchestrator",
+  "version": "0.3.0",
+  "description": "Multi-agent QA workflow for Claude Code: maintains a repo's Playwright E2E/API suite per Jira ticket, runs it, and hands a human a QA PR and report.",
+  "author": {
+    "name": "Anes Kurtovic"
+  },
+  "license": "MIT",
+  "keywords": [
+    "qa",
+    "playwright",
+    "jira",
+    "multi-agent"
+  ],
+  "repository": "https://github.com/aneskurtovic/qa-orchestrator",
+  "homepage": "https://github.com/aneskurtovic/qa-orchestrator"
+}

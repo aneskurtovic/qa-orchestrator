@@ -1,0 +1,19 @@
+{
+  "title": "qa-critic output",
+  "type": "object",
+  "required": ["verdict", "gaps"],
+  "additionalProperties": false,
+  "properties": {
+    "verdict": { "enum": ["approve", "revise"] },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["ref", "problem", "fix", "target"], "additionalProperties": false,
+        "properties": {
+          "ref": { "type": "string" }, "problem": { "type": "string", "minLength": 1 },
+          "fix": { "type": "string", "minLength": 1 }, "target": { "enum": ["qa-intake", "qa-suite-impact", "qa-change-analyst"] }
+        }
+      }
+    }
+  }
+}

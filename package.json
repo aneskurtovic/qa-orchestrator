@@ -1,0 +1,13 @@
+{
+  "name": "qa-orchestrator",
+  "version": "0.3.0",
+  "private": true,
+  "description": "Claude Code plugin: multi-agent QA workflow (see docs/design.md). No runtime dependencies.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"hooks/test/*.test.mjs\" \"scripts/test/*.test.mjs\""
+  },
+  "license": "MIT"
+}

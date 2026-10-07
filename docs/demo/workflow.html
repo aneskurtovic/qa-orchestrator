@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>qa-run Workflow Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff; --ink: #1a1a1a; --muted: #666666; --faint: #999999; --line: #dddddd;
+  --lane-a: #f7f9fc; --lane-b: #fbfcfe; --row: #ffffff;
+  --blue: #405ae7; --navy: #2c3fb0; --tint: #eef0ff; --ice: #c9d6f5;
+  --purple: #7b5ea7; --purple-tint: #f1ecf8; --purple-line: #d7cbea;
+  --green: #2d8c55; --green-ink: #ffffff; --green-tint: #e6f3ec;
+  --amber: #8a6d00; --amber-tint: #fff6d6; --amber-line: #e9cf6b;
+  --script: #ffffff; --jira: #eaf2fb; --jira-line: #8fb3dd; --jira-ink: #1d4f8a;
+  --cmd: #1a1a1a; --cmd-ink: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12141c; --ink: #eceef5; --muted: #a8adbd; --faint: #7d8296; --line: #343849;
+    --lane-a: #191c27; --lane-b: #161924; --row: #1d2130;
+    --blue: #7d8ff2; --navy: #aab6ff; --tint: #252b4a; --ice: #3a4373;
+    --purple: #b79be0; --purple-tint: #2a2338; --purple-line: #4b3d66;
+    --green: #3fae70; --green-ink: #0b1a12; --green-tint: #17301f;
+    --amber: #e4c45a; --amber-tint: #2e2812; --amber-line: #6b5a1c;
+    --script: #1d2130; --jira: #172638; --jira-line: #36577f; --jira-ink: #9cc3ef;
+    --cmd: #eceef5; --cmd-ink: #12141c;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12141c; --ink: #eceef5; --muted: #a8adbd; --faint: #7d8296; --line: #343849;
+  --lane-a: #191c27; --lane-b: #161924; --row: #1d2130;
+  --blue: #7d8ff2; --navy: #aab6ff; --tint: #252b4a; --ice: #3a4373;
+  --purple: #b79be0; --purple-tint: #2a2338; --purple-line: #4b3d66;
+  --green: #3fae70; --green-ink: #0b1a12; --green-tint: #17301f;
+  --amber: #e4c45a; --amber-tint: #2e2812; --amber-line: #6b5a1c;
+  --script: #1d2130; --jira: #172638; --jira-line: #36577f; --jira-ink: #9cc3ef;
+  --cmd: #eceef5; --cmd-ink: #12141c;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: Poppins, "Segoe UI", system-ui, sans-serif; }
+.wrap { padding: 16px; }
+.scroll { overflow-x: auto; }
+svg { display: block; width: 100%; min-width: 1200px; height: auto; }
+.toolbar { display: flex; gap: 8px; justify-content: flex-end; max-width: 1640px; margin: 0 auto 8px; }
+.toolbar button { font: 500 13px Poppins, system-ui, sans-serif; background: var(--tint); color: var(--navy); border: 0; border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.h1 { font-size: 30px; font-weight: 600; fill: var(--ink); }
+.h2 { font-size: 15px; fill: var(--blue); }
+.h3 { font-size: 12px; fill: var(--faint); }
+.leg { font-size: 12px; fill: var(--muted); }
+.lane-a { fill: var(--lane-a); } .lane-b { fill: var(--lane-b); stroke: var(--line); stroke-width: 1; }
+.lane-t { font-size: 13px; font-weight: 600; fill: var(--ink); letter-spacing: .04em; }
+.lane-p { font-size: 10.5px; fill: var(--faint); font-family: "JetBrains Mono", Consolas, monospace; }
+.n-agent { fill: var(--tint); stroke: var(--ice); stroke-width: 1.2; }
+.n-opus { fill: var(--purple-tint); stroke: var(--purple-line); stroke-width: 1.2; }
+.n-script { fill: var(--script); stroke: var(--line); stroke-width: 1.2; }
+.n-jira { fill: var(--jira); stroke: var(--jira-line); stroke-width: 1.2; }
+.n-cmd { fill: var(--cmd); }
+.n-human { fill: var(--green); }
+.n-breaker { fill: var(--amber-tint); stroke: var(--amber-line); stroke-width: 1.2; }
+.n-end { fill: var(--green-tint); }
+.n-loop { fill: var(--tint); } .n-defect { fill: var(--purple-tint); }
+.t-agent, .t-opus, .t-script, .t-jira, .t-cmd, .t-human, .t-end { font-size: 13px; font-weight: 600; }
+.t-agent { fill: var(--navy); } .t-opus { fill: var(--purple); } .t-script { fill: var(--ink); } .t-jira { fill: var(--jira-ink); }
+.t-cmd { fill: var(--cmd-ink); font-family: "JetBrains Mono", Consolas, monospace; font-weight: 400; }
+.t-human { fill: var(--green-ink); } .t-end { fill: var(--green); }
+.s-agent, .s-opus, .s-script, .s-jira, .s-cmd, .s-end { font-size: 10.5px; fill: var(--muted); }
+.s-cmd { fill: var(--cmd-ink); opacity: .75; }
+.s-human { font-size: 11px; fill: var(--green-ink); }
+.s-note { font-size: 11px; fill: var(--faint); font-style: italic; }
+.s-par { font-size: 10.5px; fill: var(--blue); font-style: italic; }
+.gid { fill: var(--green-ink); opacity: .92; } .gid-t { font-size: 11px; font-weight: 600; fill: var(--green); }
+.badge-agent { fill: var(--bg); stroke: var(--ice); } .badge-opus { fill: var(--bg); stroke: var(--purple-line); }
+.badge-t { font-size: 10px; font-weight: 600; } .bt-agent { fill: var(--blue); } .bt-opus { fill: var(--purple); }
+.t-pill-breaker { font-size: 11px; font-weight: 600; fill: var(--amber); }
+.t-pill-human { font-size: 11px; font-weight: 600; fill: var(--green-ink); }
+.t-pill-loop { font-size: 11px; font-weight: 600; fill: var(--navy); }
+.t-pill-defect { font-size: 11px; font-weight: 600; fill: var(--purple); }
+.row { fill: var(--row); stroke: var(--line); }
+.row-t { font-size: 12px; fill: var(--ink); } .row-gate { font-size: 12px; fill: var(--green); font-weight: 500; }
+.row-n { font-size: 11px; fill: var(--faint); font-style: italic; }
+path { fill: none; stroke-width: 1.5; stroke-linejoin: round; }
+.e-main { stroke: var(--faint); } .e-cond { stroke: var(--faint); stroke-dasharray: 5 4; }
+.e-loop { stroke: var(--blue); stroke-dasharray: 6 3; } .e-gate { stroke: var(--green); stroke-dasharray: 4 3; }
+.e-brk { stroke: var(--amber); stroke-dasharray: 4 3; } .e-opus { stroke: var(--purple); stroke-dasharray: 6 3; }
+.m-main { fill: var(--faint); } .m-loop { fill: var(--blue); } .m-gate { fill: var(--green); } .m-brk { fill: var(--amber); } .m-opus { fill: var(--purple); }
+.lbl-bg { fill: var(--bg); opacity: .94; }
+.lbl { font-size: 10.5px; fill: var(--muted); } .l-loop { fill: var(--blue); } .l-gate { fill: var(--green); } .l-opus { fill: var(--purple); } .l-brk { fill: var(--amber); }
+.rail-guard, .rail-rec, .rail-step, .rail-stop, .rail-bud { stroke-width: 1.2; }
+.rail-guard { fill: var(--green-tint); stroke: var(--green); } .rail-rec { fill: var(--lane-a); stroke: var(--line); }
+.rail-step { fill: var(--tint); stroke: var(--ice); } .rail-stop { fill: var(--amber-tint); stroke: var(--amber-line); }
+.rail-bud { fill: var(--amber-tint); stroke: var(--amber-line); }
+.rail-t { font-size: 11.5px; font-weight: 600; fill: var(--ink); letter-spacing: .03em; }
+.rail-s { font-size: 11px; fill: var(--muted); }
+@media print { .toolbar { display: none; } svg { min-width: 0; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="toolbar"><button type="button" id="theme">Toggle theme</button></div>
+<div class="scroll">
+<svg viewBox="0 0 1730 1840" role="img" aria-labelledby="dt dd" xmlns="http://www.w3.org/2000/svg">
+<title id="dt">qa-run workflow</title>
+<desc id="dd">The full /qa-orchestrator:qa-run flow: preflight, understand, plan, author, run, triage, feedback, deliver, with every human gate, breaker, loop and its cap.</desc>
+<defs>
+<marker id="a-main" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="m-main"/></marker>
+<marker id="a-loop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="m-loop"/></marker>
+<marker id="a-gate" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="m-gate"/></marker>
+<marker id="a-brk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="m-brk"/></marker>
+<marker id="a-opus" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="m-opus"/></marker>
+</defs>
+<text x="22" y="52" class="h1">qa-run, end to end</text>
+<text x="22" y="82" class="h2">/qa-orchestrator:qa-run &lt;KEY&gt; · one Jira ticket from Ready for QA to a QA pull request · every gate, breaker and loop</text>
+<text x="22" y="104" class="h3">Source: skills/qa-run/SKILL.md and docs/design.md §4–§6 · plugin 0.3.0 · AI recommends, Playwright executes, humans approve</text>
+<rect x="8" y="176" width="1484" height="214" rx="10" class="lane-a"/>
+<text x="22" y="202" class="lane-t" text-anchor="start"><tspan x="22" dy="0">0 · PREFLIGHT</tspan></text>
+<text x="22" y="220" class="lane-p" text-anchor="start"><tspan x="22" dy="0">scripts + Jira</tspan></text>
+<text x="22" y="233" class="lane-p" text-anchor="start"><tspan x="22" dy="0">no phase yet</tspan></text>
+<rect x="176" y="206" width="150" height="62" rx="8" class="n-cmd"/>
+<text x="251" y="228.5" class="t-cmd" text-anchor="middle"><tspan x="251" dy="0">/qa-run &lt;KEY&gt;</tspan></text>
+<text x="251" y="244.5" class="s-cmd" text-anchor="middle"><tspan x="251" dy="0">typed by a person</tspan><tspan x="251" dy="13">key format checked</tspan></text>
+<rect x="362" y="206" width="150" height="62" rx="8" class="n-script"/>
+<text x="437" y="228.5" class="t-script" text-anchor="middle"><tspan x="437" dy="0">preflight status</tspan></text>
+<text x="437" y="244.5" class="s-script" text-anchor="middle"><tspan x="437" dy="0">interrupted run?</tspan><tspan x="437" dy="13">lock held?</tspan></text>
+<rect x="548" y="206" width="150" height="62" rx="8" class="n-jira"/>
+<text x="623" y="228.5" class="t-jira" text-anchor="middle"><tspan x="623" dy="0">Fetch the ticket</tspan></text>
+<text x="623" y="244.5" class="s-jira" text-anchor="middle"><tspan x="623" dy="0">Atlassian MCP</tspan><tspan x="623" dy="13">must be Ready for QA</tspan></text>
+<rect x="734" y="206" width="150" height="62" rx="8" class="n-script"/>
+<text x="809" y="228.5" class="t-script" text-anchor="middle"><tspan x="809" dy="0">preflight start</tspan></text>
+<text x="809" y="244.5" class="s-script" text-anchor="middle"><tspan x="809" dy="0">config · lock · dev PRs</tspan><tspan x="809" dy="13">worktree qa/&lt;KEY&gt;-slug</tspan></text>
+<rect x="920" y="206" width="150" height="62" rx="8" class="n-script"/>
+<text x="995" y="228.5" class="t-script" text-anchor="middle"><tspan x="995" dy="0">save ticket</tspan></text>
+<text x="995" y="244.5" class="s-script" text-anchor="middle"><tspan x="995" dy="0">ticket.json</tspan><tspan x="995" dy="13">state.mjs set</tspan></text>
+<rect x="1106" y="206" width="150" height="62" rx="8" class="n-script"/>
+<text x="1181" y="228.5" class="t-script" text-anchor="middle"><tspan x="1181" dy="0">preflight stack</tspan></text>
+<text x="1181" y="244.5" class="s-script" text-anchor="middle"><tspan x="1181" dy="0">install · compose up</tspan><tspan x="1181" dy="13">health + SHA proof</tspan></text>
+<rect x="1292" y="206" width="150" height="62" rx="8" class="n-jira"/>
+<text x="1367" y="228.5" class="t-jira" text-anchor="middle"><tspan x="1367" dy="0">Claim the ticket</tspan></text>
+<text x="1367" y="244.5" class="s-jira" text-anchor="middle"><tspan x="1367" dy="0">→ In QA + comment</tspan><tspan x="1367" dy="13">(stack first, then claim)</tspan></text>
+<path d="M326 237 L362 237" class="e-main" marker-end="url(#a-main)"/>
+<path d="M512 237 L548 237" class="e-main" marker-end="url(#a-main)"/>
+<path d="M698 237 L734 237" class="e-main" marker-end="url(#a-main)"/>
+<path d="M884 237 L920 237" class="e-main" marker-end="url(#a-main)"/>
+<path d="M1070 237 L1106 237" class="e-main" marker-end="url(#a-main)"/>
+<path d="M1256 237 L1292 237" class="e-main" marker-end="url(#a-main)"/>
+<rect x="332" y="298" width="210" height="72" rx="12" class="n-human"/>
+<rect x="342" y="307" width="30" height="19" rx="9.5" class="gid"/>
+<text x="357" y="321" class="gid-t" text-anchor="middle"><tspan x="357" dy="0">G0</tspan></text>
+<text x="380" y="321" class="t-human" text-anchor="start"><tspan x="380" dy="0">Interrupted run</tspan></text>
+<text x="346" y="344" class="s-human" text-anchor="start"><tspan x="346" dy="0">• Resume · Take over</tspan></text>
+<text x="346" y="359" class="s-human" text-anchor="start"><tspan x="346" dy="0">• Start a new run</tspan></text>
+<path d="M437 268 L437 298" class="e-gate" marker-end="url(#a-gate)"/>
+<rect x="389.3" y="273" width="95.39999999999999" height="18" rx="4" class="lbl-bg"/>
+<text x="437" y="285" class="lbl l-gate" text-anchor="middle"><tspan x="437" dy="0">unfinished run</tspan></text>
+<rect x="716" y="290" width="186" height="24" rx="12" class="n-breaker"/>
+<text x="809" y="306" class="t-pill-breaker" text-anchor="middle"><tspan x="809" dy="0">⛔ BLOCKED_BACKGROUND</tspan></text>
+<rect x="716" y="320" width="186" height="24" rx="12" class="n-breaker"/>
+<text x="809" y="336" class="t-pill-breaker" text-anchor="middle"><tspan x="809" dy="0">⛔ BLOCKED_NOT_INTEGRATED</tspan></text>
+<path d="M809 268 L809 290" class="e-brk" marker-end="url(#a-brk)"/>
+<rect x="916" y="290" width="194" height="72" rx="12" class="n-human"/>
+<rect x="926" y="299" width="22" height="19" rx="9.5" class="gid"/>
+<text x="937" y="313" class="gid-t" text-anchor="middle"><tspan x="937" dy="0">?</tspan></text>
+<text x="956" y="313" class="t-human" text-anchor="start"><tspan x="956" dy="0">Already tested</tspan></text>
+<text x="930" y="336" class="s-human" text-anchor="start"><tspan x="930" dy="0">• Stop (nothing to Jira)</tspan></text>
+<text x="930" y="351" class="s-human" text-anchor="start"><tspan x="930" dy="0">• Re-test anyway</tspan></text>
+<path d="M872 268 L872 278 L1013 278 L1013 290" class="e-gate" marker-end="url(#a-gate)"/>
+<rect x="1120" y="290" width="150" height="24" rx="12" class="n-breaker"/>
+<text x="1195" y="306" class="t-pill-breaker" text-anchor="middle"><tspan x="1195" dy="0">⛔ BLOCKED_ENV</tspan></text>
+<path d="M1181 268 L1181 290" class="e-brk" marker-end="url(#a-brk)"/>
+<text x="1124" y="330" class="s-note" text-anchor="start"><tspan x="1124" dy="0">Jira comment, run released,</tspan><tspan x="1124" dy="12">status unchanged</tspan></text>
+<text x="809" y="360" class="s-note" text-anchor="middle"><tspan x="809" dy="0">background job · no merged dev PR</tspan><tspan x="809" dy="12">naming the key → stop</tspan></text>
+<rect x="8" y="404" width="1484" height="128" rx="10" class="lane-b"/>
+<text x="22" y="430" class="lane-t" text-anchor="start"><tspan x="22" dy="0">1 · UNDERSTAND</tspan></text>
+<text x="22" y="448" class="lane-p" text-anchor="start"><tspan x="22" dy="0">UNDERSTANDING</tspan></text>
+<rect x="176" y="436" width="170" height="64" rx="8" class="n-agent"/>
+<text x="261" y="459.5" class="t-agent" text-anchor="middle"><tspan x="261" dy="0">qa-intake</tspan></text>
+<text x="261" y="475.5" class="s-agent" text-anchor="middle"><tspan x="261" dy="0">ACs · change type</tspan><tspan x="261" dy="13">ambiguities · assumptions</tspan></text>
+<rect x="289.6" y="427" width="50.400000000000006" height="18" rx="9" class="badge-agent"/>
+<text x="314.8" y="440" class="badge-t bt-agent" text-anchor="middle"><tspan x="314.8" dy="0">sonnet</tspan></text>
+<path d="M1367 268 L1367 397 L261 397 L261 436" class="e-main" marker-end="url(#a-main)"/>
+<rect x="486" y="422" width="270" height="87" rx="12" class="n-human"/>
+<rect x="496" y="431" width="30" height="19" rx="9.5" class="gid"/>
+<text x="511" y="445" class="gid-t" text-anchor="middle"><tspan x="511" dy="0">G1</tspan></text>
+<text x="534" y="445" class="t-human" text-anchor="start"><tspan x="534" dy="0">Ticket unclear</tspan></text>
+<text x="500" y="468" class="s-human" text-anchor="start"><tspan x="500" dy="0">• Answer now → re-run intake</tspan></text>
+<text x="500" y="483" class="s-human" text-anchor="start"><tspan x="500" dy="0">• Post questions to Jira and stop</tspan></text>
+<text x="500" y="498" class="s-human" text-anchor="start"><tspan x="500" dy="0">• Proceed anyway</tspan></text>
+<path d="M346 458 L486 458" class="e-gate" marker-end="url(#a-gate)"/>
+<rect x="362.2" y="429.5" width="107.6" height="31" rx="4" class="lbl-bg"/>
+<text x="416" y="441.5" class="lbl l-gate" text-anchor="middle"><tspan x="416" dy="0">ambiguities or</tspan><tspan x="416" dy="13">confidence &lt; 0.7</tspan></text>
+<path d="M486 489 L386 489 L386 492 L346 492" class="e-loop" marker-end="url(#a-loop)"/>
+<rect x="398.5" y="479" width="71" height="18" rx="4" class="lbl-bg"/>
+<text x="434" y="491" class="lbl l-loop" text-anchor="middle"><tspan x="434" dy="0">intake-2 ↺</tspan></text>
+<text x="780" y="448" class="s-note" text-anchor="start"><tspan x="780" dy="0">Assumptions don't stop the run:</tspan><tspan x="780" dy="13">they are shown at G2, where a</tspan><tspan x="780" dy="13">person can overrule one.</tspan></text>
+<rect x="8" y="546" width="1484" height="236" rx="10" class="lane-a"/>
+<text x="22" y="572" class="lane-t" text-anchor="start"><tspan x="22" dy="0">2 · PLAN</tspan></text>
+<text x="22" y="590" class="lane-p" text-anchor="start"><tspan x="22" dy="0">PLANNING</tspan></text>
+<text x="22" y="603" class="lane-p" text-anchor="start"><tspan x="22" dy="0">AWAITING_PLAN_APPROVAL</tspan></text>
+<rect x="176" y="586" width="176" height="56" rx="8" class="n-agent"/>
+<text x="264" y="612" class="t-agent" text-anchor="middle"><tspan x="264" dy="0">qa-suite-impact</tspan></text>
+<text x="264" y="628" class="s-agent" text-anchor="middle"><tspan x="264" dy="0">ticket → update / add / delete</tspan></text>
+<rect x="295.6" y="577" width="50.400000000000006" height="18" rx="9" class="badge-agent"/>
+<text x="320.8" y="590" class="badge-t bt-agent" text-anchor="middle"><tspan x="320.8" dy="0">sonnet</tspan></text>
+<rect x="176" y="674" width="176" height="56" rx="8" class="n-agent"/>
+<text x="264" y="700" class="t-agent" text-anchor="middle"><tspan x="264" dy="0">qa-change-analyst</tspan></text>
+<text x="264" y="716" class="s-agent" text-anchor="middle"><tspan x="264" dy="0">code → what no test covers</tspan></text>
+<rect x="295.6" y="665" width="50.400000000000006" height="18" rx="9" class="badge-agent"/>
+<text x="320.8" y="678" class="badge-t bt-agent" text-anchor="middle"><tspan x="320.8" dy="0">sonnet</tspan></text>
+<text x="264" y="662" class="s-par" text-anchor="middle"><tspan x="264" dy="0">∥ dispatched in one message, run in parallel</tspan></text>
+<path d="M261 500 L261 566 L162 566 L162 614 L176 614" class="e-main" marker-end="url(#a-main)"/>
+<path d="M162 614 L162 702 L176 702" class="e-main" marker-end="url(#a-main)"/>
+<rect x="426" y="628" width="160" height="62" rx="8" class="n-script"/>
+<text x="506" y="650.5" class="t-script" text-anchor="middle"><tspan x="506" dy="0">merge-plan.mjs</tspan></text>
+<text x="506" y="666.5" class="s-script" text-anchor="middle"><tspan x="506" dy="0">plan.json + planHash</tspan><tspan x="506" dy="13">router picks the run set</tspan></text>
+<path d="M352 614 L388 614 L388 651 L426 651" class="e-main" marker-end="url(#a-main)"/>
+<path d="M352 702 L388 702 L388 667 L426 667" class="e-main" marker-end="url(#a-main)"/>
+<rect x="656" y="628" width="160" height="62" rx="8" class="n-opus"/>
+<text x="736" y="650.5" class="t-opus" text-anchor="middle"><tspan x="736" dy="0">qa-critic</tspan></text>
+<text x="736" y="666.5" class="s-opus" text-anchor="middle"><tspan x="736" dy="0">every AC covered?</tspan><tspan x="736" dy="13">nothing weakened?</tspan></text>
+<rect x="772.4" y="619" width="37.6" height="18" rx="9" class="badge-opus"/>
+<text x="791.2" y="632" class="badge-t bt-opus" text-anchor="middle"><tspan x="791.2" dy="0">opus</tspan></text>
+<path d="M586 659 L656 659" class="e-main" marker-end="url(#a-main)"/>
+<path d="M736 628 L736 562 L216 562 L216 586" class="e-opus" marker-end="url(#a-opus)"/>
+<rect x="336.65" y="545.5" width="418.7" height="31" rx="4" class="lbl-bg"/>
+<text x="546" y="557.5" class="lbl l-opus" text-anchor="middle"><tspan x="546" dy="0">revise → re-run only the targeted agents, merge, critique again</tspan><tspan x="546" dy="13">intake gap → intake first, then suite-impact · max 2 revisions (H5)</tspan></text>
+<rect x="872" y="674" width="240" height="87" rx="12" class="n-human"/>
+<rect x="882" y="683" width="62" height="19" rx="9.5" class="gid"/>
+<text x="913" y="697" class="gid-t" text-anchor="middle"><tspan x="913" dy="0">G2-esc</tspan></text>
+<text x="952" y="697" class="t-human" text-anchor="start"><tspan x="952" dy="0">Critic cap reached</tspan></text>
+<text x="886" y="720" class="s-human" text-anchor="start"><tspan x="886" dy="0">• Approve as is</tspan></text>
+<text x="886" y="735" class="s-human" text-anchor="start"><tspan x="886" dy="0">• Approve + hand gaps to the author</tspan></text>
+<text x="886" y="750" class="s-human" text-anchor="start"><tspan x="886" dy="0">• Stop</tspan></text>
+<path d="M816 673 L842 673 L842 717.5 L872 717.5" class="e-gate" marker-end="url(#a-gate)"/>
+<rect x="797.35" y="694.5" width="89.3" height="31" rx="4" class="lbl-bg"/>
+<text x="842" y="706.5" class="lbl l-gate" text-anchor="middle"><tspan x="842" dy="0">round 3 still</tspan><tspan x="842" dy="13">says revise</tspan></text>
+<rect x="1168" y="586" width="304" height="102" rx="12" class="n-human"/>
+<rect x="1178" y="595" width="30" height="19" rx="9.5" class="gid"/>
+<text x="1193" y="609" class="gid-t" text-anchor="middle"><tspan x="1193" dy="0">G2</tspan></text>
+<text x="1216" y="609" class="t-human" text-anchor="start"><tspan x="1216" dy="0">Approve the plan · every run</tspan></text>
+<text x="1182" y="632" class="s-human" text-anchor="start"><tspan x="1182" dy="0">• Approve plan</tspan></text>
+<text x="1182" y="647" class="s-human" text-anchor="start"><tspan x="1182" dy="0">• Approve, and deliver if the run passes clean</tspan></text>
+<text x="1182" y="662" class="s-human" text-anchor="start"><tspan x="1182" dy="0">• Change something → re-dispatch, merge, re-ask</tspan></text>
+<text x="1182" y="677" class="s-human" text-anchor="start"><tspan x="1182" dy="0">• Stop</tspan></text>
+<path d="M816 645 L1168 645" class="e-main" marker-end="url(#a-main)"/>
+<rect x="894.65" y="635" width="52.699999999999996" height="18" rx="4" class="lbl-bg"/>
+<text x="921" y="647" class="lbl l-main" text-anchor="middle"><tspan x="921" dy="0">approve</tspan></text>
+<path d="M1112 717.5 L1142 717.5 L1142 670 L1168 670" class="e-gate" marker-end="url(#a-gate)"/>
+<text x="1232" y="706" class="s-note" text-anchor="start"><tspan x="1232" dy="0">Bound to planHash: a later edit voids it</tspan></text>
+<rect x="8" y="796" width="1484" height="150" rx="10" class="lane-b"/>
+<text x="22" y="822" class="lane-t" text-anchor="start"><tspan x="22" dy="0">3 · MAINTAIN + AUTHOR</tspan></text>
+<text x="22" y="840" class="lane-p" text-anchor="start"><tspan x="22" dy="0">MAINTAINING</tspan></text>
+<rect x="176" y="840" width="160" height="62" rx="8" class="n-script"/>
+<text x="256" y="869" class="t-script" text-anchor="middle"><tspan x="256" dy="0">apply-deletes.mjs</tspan></text>
+<text x="256" y="885" class="s-script" text-anchor="middle"><tspan x="256" dy="0">approved deletions only</tspan></text>
+<path d="M1208 688 L1208 789 L256 789 L256 840" class="e-main" marker-end="url(#a-main)"/>
+<rect x="1178.6" y="779" width="58.8" height="18" rx="4" class="lbl-bg"/>
+<text x="1208" y="791" class="lbl l-main" text-anchor="middle"><tspan x="1208" dy="0">approved</tspan></text>
+<rect x="396" y="836" width="244" height="70" rx="8" class="n-agent"/>
+<text x="518" y="862.5" class="t-agent" text-anchor="middle"><tspan x="518" dy="0">qa-test-author</tspan></text>
+<text x="518" y="878.5" class="s-agent" text-anchor="middle"><tspan x="518" dy="0">applies updates, writes UI + API specs</tspan><tspan x="518" dy="13">self-check ≤ 3 (3rd: failing specs only)</tspan></text>
+<rect x="583.6" y="827" width="50.400000000000006" height="18" rx="9" class="badge-agent"/>
+<text x="608.8" y="840" class="badge-t bt-agent" text-anchor="middle"><tspan x="608.8" dy="0">sonnet</tspan></text>
+<path d="M336 871 L396 871" class="e-main" marker-end="url(#a-main)"/>
+<rect x="700" y="840" width="160" height="62" rx="8" class="n-script"/>
+<text x="780" y="862.5" class="t-script" text-anchor="middle"><tspan x="780" dy="0">test-diff.mjs</tspan></text>
+<text x="780" y="878.5" class="s-script" text-anchor="middle"><tspan x="780" dy="0">fewer asserts? removed?</tspan><tspan x="780" dy="13">.skip/.only? out of plan?</tspan></text>
+<path d="M640 871 L700 871" class="e-main" marker-end="url(#a-main)"/>
+<rect x="930" y="818" width="230" height="87" rx="12" class="n-human"/>
+<rect x="940" y="827" width="30" height="19" rx="9.5" class="gid"/>
+<text x="955" y="841" class="gid-t" text-anchor="middle"><tspan x="955" dy="0">G3</tspan></text>
+<text x="978" y="841" class="t-human" text-anchor="start"><tspan x="978" dy="0">Flagged test diff</tspan></text>
+<text x="944" y="864" class="s-human" text-anchor="start"><tspan x="944" dy="0">• Accept these changes</tspan></text>
+<text x="944" y="879" class="s-human" text-anchor="start"><tspan x="944" dy="0">• Send back to the author (once)</tspan></text>
+<text x="944" y="894" class="s-human" text-anchor="start"><tspan x="944" dy="0">• Stop</tspan></text>
+<path d="M860 871 L930 871" class="e-gate" marker-end="url(#a-gate)"/>
+<rect x="868.65" y="849" width="52.699999999999996" height="18" rx="4" class="lbl-bg"/>
+<text x="895" y="861" class="lbl l-gate" text-anchor="middle"><tspan x="895" dy="0">flagged</tspan></text>
+<path d="M1045 905 L1045 932 L518 932 L518 906" class="e-loop" marker-end="url(#a-loop)"/>
+<rect x="534.2" y="922" width="107.6" height="18" rx="4" class="lbl-bg"/>
+<text x="588" y="934" class="lbl l-loop" text-anchor="middle"><tspan x="588" dy="0">send back ↺ once</tspan></text>
+<rect x="1200" y="840" width="172" height="62" rx="8" class="n-script"/>
+<text x="1286" y="862.5" class="t-script" text-anchor="middle"><tspan x="1286" dy="0">restore-spec.mjs</tspan></text>
+<text x="1286" y="878.5" class="s-script" text-anchor="middle"><tspan x="1286" dy="0">tests-removed: put the</tspan><tspan x="1286" dy="13">run-start file back</tspan></text>
+<text x="1286" y="920" class="s-note" text-anchor="middle"><tspan x="1286" dy="0">then the author re-applies with Edit</tspan></text>
+<rect x="8" y="960" width="1484" height="118" rx="10" class="lane-a"/>
+<text x="22" y="986" class="lane-t" text-anchor="start"><tspan x="22" dy="0">4 · RUN</tspan></text>
+<text x="22" y="1004" class="lane-p" text-anchor="start"><tspan x="22" dy="0">EXECUTING</tspan></text>
+<text x="22" y="1030" class="s-note" text-anchor="start"><tspan x="22" dy="0">empty change set:</tspan><tspan x="22" dy="13">step 3 is skipped</tspan></text>
+<rect x="176" y="990" width="170" height="58" rx="8" class="n-script"/>
+<text x="261" y="1017" class="t-script" text-anchor="middle"><tspan x="261" dy="0">stack --attach-only</tspan></text>
+<text x="261" y="1033" class="s-script" text-anchor="middle"><tspan x="261" dy="0">re-prove health + SHA</tspan></text>
+<path d="M780 902 L780 953 L301 953 L301 990" class="e-main" marker-end="url(#a-main)"/>
+<rect x="759.75" y="904" width="40.5" height="18" rx="4" class="lbl-bg"/>
+<text x="780" y="916" class="lbl l-main" text-anchor="middle"><tspan x="780" dy="0">clean</tspan></text>
+<rect x="406" y="986" width="200" height="66" rx="8" class="n-script"/>
+<text x="506" y="1010.5" class="t-script" text-anchor="middle"><tspan x="506" dy="0">run-playwright.mjs</tspan></text>
+<text x="506" y="1026.5" class="s-script" text-anchor="middle"><tspan x="506" dy="0">attempt 1 · the whole run set</tspan><tspan x="506" dy="13">JSON + HTML report + traces</tspan></text>
+<path d="M346 1019 L406 1019" class="e-main" marker-end="url(#a-main)"/>
+<rect x="676" y="986" width="190" height="66" rx="8" class="n-end"/>
+<text x="771" y="1010.5" class="t-end" text-anchor="middle"><tspan x="771" dy="0">All green?</tspan></text>
+<text x="771" y="1026.5" class="s-end" text-anchor="middle"><tspan x="771" dy="0">no failures → skip triage</tspan><tspan x="771" dy="13">straight to step 6</tspan></text>
+<path d="M606 1019 L676 1019" class="e-cond" marker-end="url(#a-main)"/>
+<rect x="936" y="976" width="250" height="87" rx="12" class="n-human"/>
+<rect x="946" y="985" width="30" height="19" rx="9.5" class="gid"/>
+<text x="961" y="999" class="gid-t" text-anchor="middle"><tspan x="961" dy="0">G3</tspan></text>
+<text x="984" y="999" class="t-human" text-anchor="start"><tspan x="984" dy="0">Invalid run or budget</tspan></text>
+<text x="950" y="1022" class="s-human" text-anchor="start"><tspan x="950" dy="0">• 0 tests / collection error / crash</tspan></text>
+<text x="950" y="1037" class="s-human" text-anchor="start"><tspan x="950" dy="0">• H7: test budget used up</tspan></text>
+<text x="950" y="1052" class="s-human" text-anchor="start"><tspan x="950" dy="0">• → Continue with findings · Stop</tspan></text>
+<path d="M576 986 L576 970 L916 970 L916 1000 L936 1000" class="e-gate" marker-end="url(#a-gate)"/>
+<rect x="8" y="1092" width="1484" height="290" rx="10" class="lane-b"/>
+<text x="22" y="1118" class="lane-t" text-anchor="start"><tspan x="22" dy="0">5 · TRIAGE</tspan></text>
+<text x="22" y="1136" class="lane-p" text-anchor="start"><tspan x="22" dy="0">TRIAGING</tspan></text>
+<text x="22" y="1149" class="lane-p" text-anchor="start"><tspan x="22" dy="0">REPAIRING</tspan></text>
+<rect x="176" y="1204" width="170" height="66" rx="8" class="n-agent"/>
+<text x="261" y="1228.5" class="t-agent" text-anchor="middle"><tspan x="261" dy="0">qa-triage</tspan></text>
+<text x="261" y="1244.5" class="s-agent" text-anchor="middle"><tspan x="261" dy="0">classifies every failure</tspan><tspan x="261" dy="13">with evidence</tspan></text>
+<rect x="289.6" y="1195" width="50.400000000000006" height="18" rx="9" class="badge-agent"/>
+<text x="314.8" y="1208" class="badge-t bt-agent" text-anchor="middle"><tspan x="314.8" dy="0">sonnet</tspan></text>
+<path d="M506 1052 L506 1085 L261 1085 L261 1204" class="e-main" marker-end="url(#a-main)"/>
+<rect x="476.6" y="1054" width="58.8" height="18" rx="4" class="lbl-bg"/>
+<text x="506" y="1066" class="lbl l-main" text-anchor="middle"><tspan x="506" dy="0">failures</tspan></text>
+<rect x="426" y="1106" width="1006" height="34" rx="6" class="row"/>
+<rect x="432" y="1112" width="248" height="22" rx="11" class="n-loop"/>
+<text x="556" y="1127" class="t-pill-loop" text-anchor="middle"><tspan x="556" dy="0">flaky-suspected</tspan></text>
+<text x="696" y="1127" class="row-t" text-anchor="start"><tspan x="696" dy="0">rerun those specs once (any confidence)</tspan></text>
+<text x="1420" y="1127" class="row-n" text-anchor="end"><tspan x="1420" dy="0">passes → flaky · fails → triage again · flaky twice → unknown</tspan></text>
+<path d="M376 1237 L376 1123 L426 1123" class="e-loop" marker-end="url(#a-loop)"/>
+<rect x="426" y="1144" width="1006" height="34" rx="6" class="row"/>
+<rect x="432" y="1150" width="248" height="22" rx="11" class="n-loop"/>
+<text x="556" y="1165" class="t-pill-loop" text-anchor="middle"><tspan x="556" dy="0">test-bug · added spec</tspan></text>
+<text x="696" y="1165" class="row-t" text-anchor="start"><tspan x="696" dy="0">author repairs it → test-diff → rerun once</tspan></text>
+<text x="1420" y="1165" class="row-n" text-anchor="end"><tspan x="1420" dy="0">still failing → unknown</tspan></text>
+<path d="M376 1237 L376 1161 L426 1161" class="e-loop" marker-end="url(#a-loop)"/>
+<rect x="426" y="1182" width="1006" height="34" rx="6" class="row"/>
+<rect x="432" y="1188" width="248" height="22" rx="11" class="n-human"/>
+<text x="556" y="1203" class="t-pill-human" text-anchor="middle"><tspan x="556" dy="0">test-bug · updated spec</tspan></text>
+<text x="696" y="1203" class="row-gate" text-anchor="start"><tspan x="696" dy="0">G3: Let the author fix it · Continue with findings · Stop</tspan></text>
+<text x="1420" y="1203" class="row-n" text-anchor="end"><tspan x="1420" dy="0">never repaired silently</tspan></text>
+<path d="M376 1237 L376 1199 L426 1199" class="e-gate" marker-end="url(#a-gate)"/>
+<rect x="426" y="1220" width="1006" height="34" rx="6" class="row"/>
+<rect x="432" y="1226" width="248" height="22" rx="11" class="n-human"/>
+<text x="556" y="1241" class="t-pill-human" text-anchor="middle"><tspan x="556" dy="0">test-outdated</tspan></text>
+<text x="696" y="1241" class="row-gate" text-anchor="start"><tspan x="696" dy="0">G3: Accept the test change (re-approves G2) · It's a defect</tspan></text>
+<text x="1420" y="1241" class="row-n" text-anchor="end"><tspan x="1420" dy="0">existing spec, not in the plan</tspan></text>
+<path d="M376 1237 L376 1237 L426 1237" class="e-gate" marker-end="url(#a-gate)"/>
+<rect x="426" y="1258" width="1006" height="34" rx="6" class="row"/>
+<rect x="432" y="1264" width="248" height="22" rx="11" class="n-human"/>
+<text x="556" y="1279" class="t-pill-human" text-anchor="middle"><tspan x="556" dy="0">pre-existing</tspan></text>
+<text x="696" y="1279" class="row-gate" text-anchor="start"><tspan x="696" dy="0">G3: Continue with findings · Fix it in this run · Stop</tspan></text>
+<text x="1420" y="1279" class="row-n" text-anchor="end"><tspan x="1420" dy="0">broken by earlier merged work</tspan></text>
+<path d="M376 1237 L376 1275 L426 1275" class="e-gate" marker-end="url(#a-gate)"/>
+<rect x="426" y="1296" width="1006" height="34" rx="6" class="row"/>
+<rect x="432" y="1302" width="248" height="22" rx="11" class="n-defect"/>
+<text x="556" y="1317" class="t-pill-defect" text-anchor="middle"><tspan x="556" dy="0">defect</tspan></text>
+<text x="696" y="1317" class="row-t" text-anchor="start"><tspan x="696" dy="0">keep the evidence and continue: a finding, not a stop</tspan></text>
+<text x="1420" y="1317" class="row-n" text-anchor="end"><tspan x="1420" dy="0">the report carries it</tspan></text>
+<path d="M376 1237 L376 1313 L426 1313" class="e-main" marker-end="url(#a-main)"/>
+<rect x="426" y="1334" width="1006" height="34" rx="6" class="row"/>
+<rect x="432" y="1340" width="248" height="22" rx="11" class="n-human"/>
+<text x="556" y="1355" class="t-pill-human" text-anchor="middle"><tspan x="556" dy="0">env · unknown · conf &lt; 0.6 · critical path</tspan></text>
+<text x="696" y="1355" class="row-gate" text-anchor="start"><tspan x="696" dy="0">G3: Continue with findings · Stop (env: + Environment fixed → rerun)</tspan></text>
+<text x="1420" y="1355" class="row-n" text-anchor="end"><tspan x="1420" dy="0">the narrowest options win</tspan></text>
+<path d="M376 1237 L376 1351 L426 1351" class="e-gate" marker-end="url(#a-gate)"/>
+<path d="M346 1237 L376 1237" class="e-main" marker-end="url(#none)"/>
+<text x="261" y="1292" class="s-note" text-anchor="middle"><tspan x="261" dy="0">Reruns and repairs count</tspan><tspan x="261" dy="13">against the 7-launch budget (H7)</tspan></text>
+<rect x="8" y="1396" width="1484" height="104" rx="10" class="lane-a"/>
+<text x="22" y="1422" class="lane-t" text-anchor="start"><tspan x="22" dy="0">6 · FEEDBACK</tspan></text>
+<text x="22" y="1440" class="lane-p" text-anchor="start"><tspan x="22" dy="0">FEEDBACK</tspan></text>
+<rect x="176" y="1418" width="220" height="62" rx="8" class="n-opus"/>
+<text x="286" y="1440.5" class="t-opus" text-anchor="middle"><tspan x="286" dy="0">qa-feedback</tspan></text>
+<text x="286" y="1456.5" class="s-opus" text-anchor="middle"><tspan x="286" dy="0">report · AC coverage · defects</tspan><tspan x="286" dy="13">recommended verdict</tspan></text>
+<rect x="352.4" y="1409" width="37.6" height="18" rx="9" class="badge-opus"/>
+<text x="371.2" y="1422" class="badge-t bt-opus" text-anchor="middle"><tspan x="371.2" dy="0">opus</tspan></text>
+<path d="M261 1320 L261 1389 L256 1389 L256 1418" class="e-main" marker-end="url(#a-main)"/>
+<path d="M771 1052 L771 1062 L1482 1062 L1482 1404 L316 1404 L316 1418" class="e-cond" marker-end="url(#a-main)"/>
+<rect x="486" y="1418" width="260" height="62" rx="8" class="n-script"/>
+<text x="616" y="1440.5" class="t-script" text-anchor="middle"><tspan x="616" dy="0">known-drift probe (in parallel)</tspan></text>
+<text x="616" y="1456.5" class="s-script" text-anchor="middle"><tspan x="616" dy="0">every 5th run: only the skipped tests,</tspan><tspan x="616" dy="13">once · never the verdict or the report</tspan></text>
+<path d="M396 1449 L486 1449" class="e-cond" marker-end="url(#a-main)"/>
+<rect x="384.15" y="1427" width="113.69999999999999" height="18" rx="4" class="lbl-bg"/>
+<text x="441" y="1439" class="lbl l-cond" text-anchor="middle"><tspan x="441" dy="0">∥ while it writes</tspan></text>
+<text x="776" y="1442" class="s-note" text-anchor="start"><tspan x="776" dy="0">Its result becomes a memory suggestion at release:</tspan><tspan x="776" dy="13">remove or narrow a qa.knownDrift entry.</tspan></text>
+<rect x="8" y="1514" width="1484" height="196" rx="10" class="lane-b"/>
+<text x="22" y="1540" class="lane-t" text-anchor="start"><tspan x="22" dy="0">7 · REPORT + DELIVER</tspan></text>
+<text x="22" y="1558" class="lane-p" text-anchor="start"><tspan x="22" dy="0">REPORTING</tspan></text>
+<rect x="176" y="1554" width="180" height="66" rx="8" class="n-script"/>
+<text x="266" y="1578.5" class="t-script" text-anchor="middle"><tspan x="266" dy="0">deliver-tests --check</tspan></text>
+<text x="266" y="1594.5" class="s-script" text-anchor="middle"><tspan x="266" dy="0">stale? clean pass?</tspan><tspan x="266" dy="13">anything to deliver?</tspan></text>
+<path d="M286 1480 L286 1507 L266 1507 L266 1554" class="e-main" marker-end="url(#a-main)"/>
+<rect x="426" y="1534" width="250" height="87" rx="12" class="n-human"/>
+<rect x="436" y="1543" width="70" height="19" rx="9.5" class="gid"/>
+<text x="471" y="1557" class="gid-t" text-anchor="middle"><tspan x="471" dy="0">DELIVER</tspan></text>
+<text x="514" y="1557" class="t-human" text-anchor="start"><tspan x="514" dy="0">Push the QA PR?</tspan></text>
+<text x="440" y="1580" class="s-human" text-anchor="start"><tspan x="440" dy="0">• Yes</tspan></text>
+<text x="440" y="1595" class="s-human" text-anchor="start"><tspan x="440" dy="0">• No → nothing pushed, ticket stays</tspan></text>
+<text x="440" y="1610" class="s-human" text-anchor="start"><tspan x="440" dy="0">• In QA, worktree kept</tspan></text>
+<path d="M356 1577 L426 1577" class="e-gate" marker-end="url(#a-gate)"/>
+<rect x="358.55" y="1555" width="64.9" height="18" rx="4" class="lbl-bg"/>
+<text x="391" y="1567" class="lbl l-gate" text-anchor="middle"><tspan x="391" dy="0">otherwise</tspan></text>
+<rect x="746" y="1548" width="210" height="78" rx="8" class="n-script"/>
+<text x="851" y="1572" class="t-script" text-anchor="middle"><tspan x="851" dy="0">deliver-tests.mjs</tspan></text>
+<text x="851" y="1588" class="s-script" text-anchor="middle"><tspan x="851" dy="0">commits approved QA files only</tspan><tspan x="851" dy="13">pushes qa/&lt;KEY&gt;-slug (never forced)</tspan><tspan x="851" dy="13">opens QA PR · draft if QA Failed</tspan></text>
+<path d="M676 1584 L746 1584" class="e-main" marker-end="url(#a-main)"/>
+<rect x="696.85" y="1562" width="28.299999999999997" height="18" rx="4" class="lbl-bg"/>
+<text x="711" y="1574" class="lbl l-main" text-anchor="middle"><tspan x="711" dy="0">Yes</tspan></text>
+<path d="M266 1620 L266 1674 L851 1674 L851 1626" class="e-cond" marker-end="url(#a-main)"/>
+<rect x="468.45" y="1664" width="260.1" height="18" rx="4" class="lbl-bg"/>
+<text x="598.5" y="1676" class="lbl l-cond" text-anchor="middle"><tspan x="598.5" dy="0">G2 pre-approved + clean pass: no question</tspan></text>
+<rect x="1006" y="1554" width="170" height="66" rx="8" class="n-jira"/>
+<text x="1091" y="1578.5" class="t-jira" text-anchor="middle"><tspan x="1091" dy="0">Jira report</tspan></text>
+<text x="1091" y="1594.5" class="s-jira" text-anchor="middle"><tspan x="1091" dy="0">comment + QA PR link</tspan><tspan x="1091" dy="13">→ QA Review</tspan></text>
+<path d="M956 1587 L1006 1587" class="e-main" marker-end="url(#a-main)"/>
+<rect x="1222" y="1554" width="150" height="66" rx="8" class="n-script"/>
+<text x="1297" y="1578.5" class="t-script" text-anchor="middle"><tspan x="1297" dy="0">release --teardown</tspan></text>
+<text x="1297" y="1594.5" class="s-script" text-anchor="middle"><tspan x="1297" dy="0">history · memory</tspan><tspan x="1297" dy="13">tidy · stack down</tspan></text>
+<path d="M1176 1587 L1222 1587" class="e-main" marker-end="url(#a-main)"/>
+<text x="22" y="1594" class="s-note" text-anchor="start"><tspan x="22" dy="0">no changes:</tspan><tspan x="22" dy="13">no PR, straight</tspan><tspan x="22" dy="13">to the Jira report</tspan></text>
+<text x="1091" y="1638" class="s-note" text-anchor="middle"><tspan x="1091" dy="0">not after DELIVER No</tspan></text>
+<rect x="8" y="1724" width="1484" height="92" rx="10" class="lane-a"/>
+<text x="22" y="1750" class="lane-t" text-anchor="start"><tspan x="22" dy="0">8 · HUMAN</tspan></text>
+<text x="22" y="1768" class="lane-p" text-anchor="start"><tspan x="22" dy="0">outside the plugin</tspan></text>
+<text x="22" y="1781" class="lane-p" text-anchor="start"><tspan x="22" dy="0">AWAITING_HUMAN_REVIEW</tspan></text>
+<rect x="176" y="1738" width="430" height="72" rx="12" class="n-human"/>
+<rect x="186" y="1747" width="30" height="19" rx="9.5" class="gid"/>
+<text x="201" y="1761" class="gid-t" text-anchor="middle"><tspan x="201" dy="0">G4</tspan></text>
+<text x="224" y="1761" class="t-human" text-anchor="start"><tspan x="224" dy="0">A person decides, always</tspan></text>
+<text x="190" y="1784" class="s-human" text-anchor="start"><tspan x="190" dy="0">• Review and merge the QA PR in GitHub</tspan></text>
+<text x="190" y="1799" class="s-human" text-anchor="start"><tspan x="190" dy="0">• Set QA Passed or QA Failed in Jira</tspan></text>
+<path d="M1297 1620 L1297 1717 L391 1717 L391 1738" class="e-gate" marker-end="url(#a-gate)"/>
+<text x="636" y="1764" class="s-note" text-anchor="start"><tspan x="636" dy="0">The guard denies the plugin both (H1, H3), even after the run hands over.</tspan><tspan x="636" dy="14">The session keeps those rules until it ends.</tspan></text>
+<rect x="1508" y="176" width="212" height="286" rx="10" class="rail-guard"/>
+<text x="1520" y="198" class="rail-t" text-anchor="start"><tspan x="1520" dy="0">GUARD · PreToolUse</tspan></text>
+<text x="1520" y="218" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">Every tool call during the run:</tspan></text>
+<text x="1520" y="232" class="rail-s" text-anchor="start"><tspan x="1520" dy="0"></tspan></text>
+<text x="1520" y="246" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">H1 no merge / approve</tspan></text>
+<text x="1520" y="260" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">H2 no git push</tspan></text>
+<text x="1520" y="274" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">H3 Jira: reads, comment,</tspan></text>
+<text x="1520" y="288" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">    2 transitions only</tspan></text>
+<text x="1520" y="302" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">H4 author writes the plan only</tspan></text>
+<text x="1520" y="316" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">H5 critic rounds · no SendMessage</tspan></text>
+<text x="1520" y="330" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">H6 shell allowlist per agent</tspan></text>
+<text x="1520" y="344" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">H7 7 test launches</tspan></text>
+<text x="1520" y="358" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">H8 no MCP for subagents</tspan></text>
+<text x="1520" y="372" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">H9 no commit / PR writes</tspan></text>
+<text x="1520" y="386" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">H10 run state via scripts</tspan></text>
+<text x="1520" y="400" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">H11 reads: worktree, run, plugin</tspan></text>
+<rect x="1508" y="476" width="212" height="116" rx="10" class="rail-rec"/>
+<text x="1520" y="498" class="rail-t" text-anchor="start"><tspan x="1520" dy="0">RECORDER · SubagentStop</tspan></text>
+<text x="1520" y="518" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">Each agent's time and tokens</tspan></text>
+<text x="1520" y="532" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">→ events.jsonl</tspan></text>
+<text x="1520" y="546" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">Its handback → outputs/&lt;step&gt;.md</tspan></text>
+<text x="1520" y="560" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">Never blocks</tspan></text>
+<rect x="1508" y="606" width="212" height="214" rx="10" class="rail-step"/>
+<text x="1520" y="628" class="rail-t" text-anchor="start"><tspan x="1520" dy="0">EVERY AGENT STEP</tspan></text>
+<text x="1520" y="648" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">brief.mjs writes the brief</tspan></text>
+<text x="1520" y="662" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">dispatch (no model override)</tspan></text>
+<text x="1520" y="676" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">validate.mjs: schema + facts</tspan></text>
+<text x="1520" y="690" class="rail-s" text-anchor="start"><tspan x="1520" dy="0"></tspan></text>
+<text x="1520" y="704" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">invalid → &lt;step&gt;-fix</tspan></text>
+<text x="1520" y="718" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">invalid again → G3:</tspan></text>
+<text x="1520" y="732" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">  One more fix · Stop</tspan></text>
+<text x="1520" y="746" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">&lt;step&gt;-fix-2 invalid → stop</tspan></text>
+<text x="1520" y="760" class="rail-s" text-anchor="start"><tspan x="1520" dy="0"></tspan></text>
+<text x="1520" y="774" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">Agents: no Jira, no git writes</tspan></text>
+<rect x="1508" y="834" width="212" height="116" rx="10" class="rail-stop"/>
+<text x="1520" y="856" class="rail-t" text-anchor="start"><tspan x="1520" dy="0">ANY GATE: STOP</tspan></text>
+<text x="1520" y="876" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">Jira comment</tspan></text>
+<text x="1520" y="890" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">phase STOPPED</tspan></text>
+<text x="1520" y="904" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">release --forget --teardown</tspan></text>
+<text x="1520" y="918" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">(frees the machine lock)</tspan></text>
+<rect x="1508" y="964" width="212" height="128" rx="10" class="rail-bud"/>
+<text x="1520" y="986" class="rail-t" text-anchor="start"><tspan x="1520" dy="0">BUDGETS</tspan></text>
+<text x="1520" y="1006" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">Critic: 1 + 2 rounds (H5)</tspan></text>
+<text x="1520" y="1020" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">Test launches: 7 (H7)</tspan></text>
+<text x="1520" y="1034" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">Author self-checks: ≤ 3</tspan></text>
+<text x="1520" y="1048" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">Flaky: 1 rerun</tspan></text>
+<text x="1520" y="1062" class="rail-s" text-anchor="start"><tspan x="1520" dy="0">Repair: 1 per added spec</tspan></text>
+<rect x="22" y="128" width="26" height="18" rx="5" class="n-cmd"/>
+<text x="56" y="142" class="leg" text-anchor="start"><tspan x="56" dy="0">Slash command</tspan></text>
+<rect x="174.3" y="128" width="26" height="18" rx="5" class="n-agent"/>
+<text x="208.3" y="142" class="leg" text-anchor="start"><tspan x="208.3" dy="0">Agent · sonnet</tspan></text>
+<rect x="333.7" y="128" width="26" height="18" rx="5" class="n-opus"/>
+<text x="367.7" y="142" class="leg" text-anchor="start"><tspan x="367.7" dy="0">Agent · opus</tspan></text>
+<rect x="478.9" y="128" width="26" height="18" rx="5" class="n-script"/>
+<text x="512.9" y="142" class="leg" text-anchor="start"><tspan x="512.9" dy="0">Script / Playwright</tspan></text>
+<rect x="673.8" y="128" width="26" height="18" rx="5" class="n-jira"/>
+<text x="707.8" y="142" class="leg" text-anchor="start"><tspan x="707.8" dy="0">Jira (MCP, main session)</tspan></text>
+<rect x="904.1999999999999" y="128" width="26" height="18" rx="5" class="n-human"/>
+<text x="938.1999999999999" y="142" class="leg" text-anchor="start"><tspan x="938.1999999999999" dy="0">Human gate</tspan></text>
+<rect x="1035.1999999999998" y="128" width="26" height="18" rx="5" class="n-breaker"/>
+<text x="1069.1999999999998" y="142" class="leg" text-anchor="start"><tspan x="1069.1999999999998" dy="0">Breaker: stops the run</tspan></text>
+<path d="M1251.3999999999999 137 L1281.3999999999999 137" class="e-main" marker-end="url(#a-main)"/>
+<text x="1289.3999999999999" y="142" class="leg" text-anchor="start"><tspan x="1289.3999999999999" dy="0">flow</tspan></text>
+<path d="M1339.8 137 L1369.8 137" class="e-cond" marker-end="url(#a-main)"/>
+<text x="1377.8" y="142" class="leg" text-anchor="start"><tspan x="1377.8" dy="0">conditional</tspan></text>
+<path d="M1477.8999999999999 137 L1507.8999999999999 137" class="e-loop" marker-end="url(#a-loop)"/>
+<text x="1515.8999999999999" y="142" class="leg" text-anchor="start"><tspan x="1515.8999999999999" dy="0">loop (capped)</tspan></text>
+<path d="M1630.1999999999998 137 L1660.1999999999998 137" class="e-gate" marker-end="url(#a-gate)"/>
+<text x="1668.1999999999998" y="142" class="leg" text-anchor="start"><tspan x="1668.1999999999998" dy="0">to a gate</tspan></text>
+<path d="M1754.1 137 L1784.1 137" class="e-opus" marker-end="url(#a-opus)"/>
+<text x="1792.1" y="142" class="leg" text-anchor="start"><tspan x="1792.1" dy="0">critic loop</tspan></text>
+</svg>
+</div>
+</div>
+<script>
+document.getElementById("theme").addEventListener("click", function () {
+  var r = document.documentElement, dark = r.getAttribute("data-theme") === "dark" ||
+    (!r.getAttribute("data-theme") && matchMedia("(prefers-color-scheme: dark)").matches);
+  r.setAttribute("data-theme", dark ? "light" : "dark");
+});
+</script>
+</body>
+</html>

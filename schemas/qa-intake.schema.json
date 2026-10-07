@@ -1,0 +1,30 @@
+{
+  "title": "qa-intake output",
+  "type": "object",
+  "required": ["acceptanceCriteria", "changeType", "affectedAreas", "ambiguities", "confidence"],
+  "additionalProperties": false,
+  "properties": {
+    "acceptanceCriteria": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["id", "text", "testable"], "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^AC\\d+$" },
+          "text": { "type": "string", "minLength": 1 },
+          "testable": { "type": "boolean" }
+        }
+      }
+    },
+    "changeType": { "enum": ["ui", "api", "auth", "mixed", "unknown"] },
+    "affectedAreas": { "type": "array", "items": { "type": "string" } },
+    "ambiguities": { "type": "array", "items": { "type": "string" } },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["acId", "question", "assumed"], "additionalProperties": false,
+        "properties": { "acId": { "type": "string" }, "question": { "type": "string" }, "assumed": { "type": "string" }, "basis": { "type": "string" } }
+      }
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+  }
+}

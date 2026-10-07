@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "aneskurtovic",
+  "description": "QA orchestration plugin for Claude Code",
+  "owner": {
+    "name": "Anes Kurtovic"
+  },
+  "plugins": [
+    {
+      "name": "qa-orchestrator",
+      "source": "./",
+      "description": "Multi-agent QA workflow: suite maintenance, Playwright runs, QA PR + Jira report, human-gated."
+    }
+  ]
+}

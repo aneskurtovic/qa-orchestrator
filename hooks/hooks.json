@@ -1,0 +1,14 @@
+{
+  "description": "qa-orchestrator guardrails (docs/design.md §6). Install the plugin at project/local scope so these load only in the target repo; there they stay dormant unless the current session owns an active QA run (.qa-runs/active.json). The SubagentStop recorder appends agent telemetry to RUN/events.jsonl, saves each agent handback to RUN/outputs/<step>.md, and never blocks.",
+  "hooks": {
+    "PreToolUse": [
+      { "matcher": "^(Bash|PowerShell|Edit|Write|MultiEdit|NotebookEdit|Agent|Task|SendMessage|Read|Grep|Glob)$",
+        "hooks": [ { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/guard.mjs\" PreToolUse", "timeout": 10 } ] },
+      { "matcher": "^mcp__",
+        "hooks": [ { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/guard.mjs\" PreToolUse", "timeout": 10 } ] }
+    ],
+    "SubagentStop": [
+      { "hooks": [ { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/record.mjs\"", "timeout": 10 } ] }
+    ]
+  }
+}
